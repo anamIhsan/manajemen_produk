@@ -2,21 +2,21 @@
 
 namespace App\Http\Middleware;
 
-use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckAuth
+class CheckUser
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response{
+    public function handle(Request $request, Closure $next): Response
+    {
         $token = Session::get('jwt');
 
         if(!$token){
@@ -24,16 +24,13 @@ class CheckAuth
         }
 
         $payload = JWTAuth::setToken($token)->getPayload();
-        $validity = $payload->get('exp');
-        $expiration = Carbon::createFromTimestamp($validity);
+        $level = $payload->get('level');
 
-        $cekValidity = Carbon::now()->greaterThan($expiration);
+        $cekLevel = $level == 'User';
 
-        if($cekValidity){
-            return $this->redirectToLogin("Sesi telah berakhir, silakan login kembali");
+        if(!$cekLevel){
+            return $this->redirectToLogin("Silahkan login sebagai User");
         }
-
-        $request->attributes->set('payload', $payload);
         return $next($request);
     }
 

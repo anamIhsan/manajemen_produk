@@ -23,10 +23,10 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Pembeli</th>
-                                <th>Nama</th>
+                                <th>Produk</th>
+                                <th>Harga</th>
                                 <th>Jumlah</th>
-                                <th>Total Harga</th>
+                                <th>Total</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -35,14 +35,13 @@
                             @foreach ($pesanan as $value)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{$value->name}}</td>
-                                <td>{{$value->email}}</td>
-                                <td>{{$value->alamat}}</td>
-                                <td>{{$value->no_telepon}}</td>
-                                <td>{{$value->level}}</td>
+                                <td>{{$value->produk->nama}}</td>
+                                <td>{{$value->produk->harga}}</td>
+                                <td>{{$value->jumlah}}</td>
+                                <td>{{$value->total_harga}}</td>
+                                <td>{{$value->status_pesanan}}</td>
                                 <td>
-                                    <a href="{{route('pesanan.form-update', ['user' => $value->id])}}" class="btn btn-sm btn-warning">Edit</a>
-                                    <form action="{{route('pesanan.delete', ['user' => $value->id])}}" method="post">
+                                    <form action="{{route('pesanan.delete', ['pesanan' => $value->id])}}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Hapus</button>

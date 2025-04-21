@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
@@ -17,10 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['prefix' => 'users', 'active_menu' => 'user'], function() {
+
+});
+
 Route::middleware('checkAuth')->group(function () {
-    Route::get('/', function () {
-        return view('pages.dashboard.index');
-    })->name('dashboard.index');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::prefix('produk')->as('produk.')->group(function () {
         Route::get('/', [ProdukController::class, 'index'])->name('index');
@@ -47,16 +50,20 @@ Route::middleware('checkAuth')->group(function () {
             Route::put('/update/{user}', [UserController::class, 'update'])->name('update');
 
             Route::delete('/delete/{user}', [UserController::class, 'delete'])->name('delete');
-    });
+        });
     });
 
     Route::prefix('pesanan')->as('pesanan.')->group(function () {
         Route::get('/', [PesananController::class, 'index'])->name('index');
 
-        Route::get('/form-create', [PesananController::class, 'formCreate'])->name('form-create');
-        Route::post('/create', [PesananController::class, 'create'])->name('create');
+        Route::middleware('checkUser')->group(function () {
+            Route::get('/form-create', [PesananController::class, 'formCreate'])->name('form-create');
+            Route::post('/create', [PesananController::class, 'create'])->name('create');
+        });
 
-        Route::delete('/delete/{pesanan}', [PesananController::class, 'delete'])->name('delete');
+        Route::middleware('checkAdmin')->group(function () {
+            Route::delete('/delete/{pesanan}', [PesananController::class, 'delete'])->name('delete');
+        });
     });
 });
 

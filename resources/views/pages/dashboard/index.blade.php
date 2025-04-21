@@ -25,7 +25,7 @@
                     <div class="col col-stats ms-3 ms-sm-0">
                     <div class="numbers">
                         <p class="card-category">Pengguna</p>
-                        <h4 class="card-title">1,294</h4>
+                        <h4 class="card-title">{{ $users->count() }}</h4>
                     </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                     <div class="col col-stats ms-3 ms-sm-0">
                     <div class="numbers">
                         <p class="card-category">Produk</p>
-                        <h4 class="card-title">1,345</h4>
+                        <h4 class="card-title">{{ $produk->count() }}</h4>
                     </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                     <div class="col col-stats ms-3 ms-sm-0">
                     <div class="numbers">
                         <p class="card-category">Pesanan</p>
-                        <h4 class="card-title">576</h4>
+                        <h4 class="card-title">{{ $pesanan->count() }}</h4>
                     </div>
                     </div>
                 </div>

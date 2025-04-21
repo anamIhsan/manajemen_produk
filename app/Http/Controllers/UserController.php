@@ -95,8 +95,7 @@ class UserController extends Controller
         }
     }
 
-    public function delete(User $user)
-    {
+    public function delete(User $user){
         try {
             $delete = User::destroy($user->id);
             return redirect()->route('user.index')->with('success', "Berhasil dihapus");
