@@ -69,7 +69,7 @@
                     </li>
                     <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Logout <i class="fa fa-sign"></i></a>
+                        <a class="dropdown-item" href="{{route('auth.logout')}}">Logout <i class="fa fa-sign"></i></a>
                     </li>
                     </div>
                 </ul>
